@@ -29,3 +29,5 @@ Route::post('nome', [ServicoController::class, 'pesquisarPorNome']);
 Route::delete('delete/{id}', [ServicoController::class, 'excluir']);
 
 Route::put('update', [ServicoController::class, 'update']);
+
+Route::post('descricao', [ServicoController::class, 'pesquisarPorDescricao']);

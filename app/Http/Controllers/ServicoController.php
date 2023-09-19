@@ -93,17 +93,17 @@ class ServicoController extends Controller
             ]);
         }
 
-        if (!isset($request->nome)) {
+        if (isset($request->nome)) {
             $servico->nome = $request->nome;
         }
 
-        if (!isset($request->descricao)) {
+        if (isset($request->descricao)) {
             $servico->descricao = $request->descricao;
         }
-        if (!isset($request->duracao)) {
+        if (isset($request->duracao)) {
             $servico->duracao = $request->duracao;
         }
-        if (!isset($request->preco)) {
+        if (isset($request->preco)) {
             $servico->preco = $request->preco;
         }
 
@@ -115,6 +115,21 @@ class ServicoController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Serviço atualizado.'
+        ]);
+    }
+
+    public function pesquisarPorDescricao(Request $request)
+    {
+        $servicos = Servico::where('descricao', 'like', '%' . $request->descricao . '%')->get();
+        if (count($servicos) > 0) {
+            return response()->json([
+                'status' => true,
+                'data' => $servicos
+            ]);
+        }
+        return response()->json([
+            'status' => false,
+            'data' => 'Não há resultados para pesquisa'
         ]);
     }
 }
