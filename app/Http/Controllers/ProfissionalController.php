@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClienteRequest;
-use App\Models\Cliente;
+use App\Http\Requests\ProfissionalFormRequest;
+use App\Models\Profissional;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class ProfissionalController extends Controller
 {
-    public function store(ClienteRequest $request){
+    public function store(ProfissionalFormRequest $request)
+    {
 
-        $cliente = Cliente::create([
-           
+        $profissional = Profissional::create([
+
 
             'id' => $request->id,
             'nome' => $request->nome,
@@ -32,128 +33,126 @@ class ClienteController extends Controller
         ]);
         return response()->json([
             "success" => true,
-            "message" => "Cliente Cadastrado com sucesso",
-            "data" => $cliente
+            "message" =>"Profissional Cadastrado com sucesso",
+            "data" => $profissional
 
         ], 200);
     }
 
     public function pesquisarPorIdCliente($id)
     {
-        $cliente = Cliente::find($id);
+        $profissional = Profissional::find($id);
 
-        if ($cliente == null) {
+        if ($profissional == null) {
             return response()->json([
                 'status' => false,
-                'message' => "Cliente não cadastrado"
+                'message' => "Profissional não cadastrado"
             ]);
         }
         return response()->json([
             ' status' => true,
-            'data' => $cliente
+            'data' => $profissional
         ]);
     }
 
     public function retornarTodosCliente()
     {
-        $cliente = Cliente::all();
+        $profissional = Profissional::all();
         return response()->json([
             ' status' => true,
-            'data' => $cliente
+            'data' => $profissional
         ]);
     }
 
-   
+
     public function pesquisarPorNomeCliente(Request $request)
     {
-        $cliente = Cliente::where('nome', 'like', '%' . $request->nome . '%')->get();
+        $profissional = Profissional::where('nome', 'like', '%' . $request->nome . '%')->get();
 
-        if (count($cliente) > 0) {
+        if (count($profissional) > 0) {
             return response()->json([
                 ' status' => true,
-                'data' => $cliente
+                'data' => $profissional
             ]);
         }
     }
     public function excluirCliente($id)
     {
-        $cliente = Cliente::find($id);
+        $profissional = Profissional::find($id);
 
-        if (!isset($cliente)) {
+        if (!isset($profissional)) {
             return response()->json([
                 'status' => false,
-                'message' => "Cliente não Sencontrado"
+                'message' => "Profissional não Sencontrado"
             ]);
         }
 
-        $cliente->deleteCliente();
+        $profissional->deleteCliente();
         return response()->json([
             'status' => true,
-            'message' => "Cliente excluido com sucesso"
+            'message' => "Profissional excluido com sucesso"
         ]);
     }
 
     public function updateCliente(Request $request)
     {
-        $cliente = Cliente::find($request->id);
-        if (!isset($cliente)) {
+        $profissional = Profissional::find($request->id);
+        if (!isset($profissional)) {
             return response()->json([
                 'status' => false,
-                'message' => "Cliente não Sencontrado"
+                'message' => "Profissional não Sencontrado"
             ]);
         }
 
         if (isset($request->id)) {
-            $cliente->id = $request->id;
+            $profissional->id = $request->id;
         }
-
         if (isset($request->nome)) {
-            $cliente->nome = $request->nome;
+            $profissional->nome = $request->nome;
         }
         if (isset($request->celular)) {
-            $cliente->celular = $request->celular;
+            $profissional->celular = $request->celular;
         }
         if (isset($request->email)) {
-            $cliente->email = $request->email;
+            $profissional->email = $request->email;
         }
         if (isset($request->cpf)) {
-            $cliente->cpf = $request->cpf;
+            $profissional->cpf = $request->cpf;
         }
         if (isset($request->DatadeNascimento)) {
-            $cliente->DatadeNascimento = $request->DatadeNascimento;
+            $profissional->DatadeNascimento = $request->DatadeNascimento;
         }
         if (isset($request->cidade)) {
-            $cliente->cidade = $request->cidade;
+            $profissional->cidade = $request->cidade;
         }
         if (isset($request->estado)) {
-            $cliente->estado = $request->estado;
+            $profissional->estado = $request->estado;
         }
         if (isset($request->pais)) {
-            $cliente->pais = $request->pais;
+            $profissional->pais = $request->pais;
         }
         if (isset($request->rua)) {
-            $cliente->rua = $request->rua;
+            $profissional->rua = $request->rua;
         }
         if (isset($request->numero)) {
-            $cliente->numero = $request->numero;
+            $profissional->numero = $request->numero;
         }
         if (isset($request->bairro)) {
-            $cliente->bairro = $request->bairro;
+            $profissional->bairro = $request->bairro;
         }
         if (isset($request->cep)) {
-            $cliente->cep = $request->cep;
+            $profissional->cep = $request->cep;
         }
         if (isset($request->senha)) {
-            $cliente->senha = $request->senha;
+            $profissional->senha = $request->senha;
         }
 
 
-        $cliente->update();
+        $profissional->update();
 
         return response()->json([
             'status' => true,
-            'message' => 'Cliente atualizado.'
+            'message' => 'Profissional atualizado.'
         ]);
     }
-
 }
